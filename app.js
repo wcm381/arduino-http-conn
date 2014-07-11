@@ -15,7 +15,7 @@ server = http.createServer( function(req,res){
   switch (path){
     case '/':
       res.writeHead(200, {'Content-Type': 'text/html'});
-      res.write('<h1>Welcome. Try the <a href="/index.html">example</a>.</h1>');
+      res.write('<h1>Welcome.</h1>');
       res.end();
       break;
   default: send404(res);
