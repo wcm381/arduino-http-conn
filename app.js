@@ -37,7 +37,7 @@ net.createServer(function(socket){
   remoteClients.push(socket); //add client
   
   
-  console.log('tcp server running on port ', TCP_PORT);
+  console.log('tcp server running on port ', REMOTE_PORT);
   console.log('web server running on port ', HTTP_PORT);
   
   socket.on('close', function() {
