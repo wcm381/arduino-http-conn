@@ -8,10 +8,7 @@ io = require('socket.io');
 var app = express(),
 server = http.createServer(app); // Create HTTP Server
 
-app.configure(function () {
-  app.set('port', FORWARDED_PORT); // Set the app's port
-});
-
+app.set('port', FORWARDED_PORT); // Set the app's port
 
 // Initialize the HTTP server
 server.listen(app.get('port'), function () {
@@ -23,4 +20,4 @@ var sio = io.listen(server);
 
 sio.sockets.on('connection', function (client) {
   console.log("hello", client);
-})
+});
