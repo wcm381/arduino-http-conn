@@ -1,23 +1,64 @@
-var FORWARDED_PORT = 8080;  // Port: 80 Forwarded to 8080
 
-var express = require('express'),
-http = require('http'),
-io = require('socket.io');
+var REMOTE_PORT = 8080;
+var HTTP_PORT = 6000;
+
+var http = require('http'),
+    net = require('net'),
+    url = require('url'),
+    io = require('socket.io'),
+    server;
+
+var remoteClients = [];
+
+server = http.createServer( function(req,res){
+  var path = url.parse(req.url).pathname;
+  switch (path){
+    case '/':
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.write('<h1>Welcome. Try the <a href="/index.html">example</a>.</h1>');
+      res.end();
+      break;
+  default: send404(res);
+  }    
+  console.log(path);
+}),
+send404 = function(res){
+  res.writeHead(404);
+  res.write('404');
+  res.end();
+};
+
+server.listen(HTTP_PORT);
 
 
-var app = express(),
-server = http.createServer(app); // Create HTTP Server
+net.createServer(function(socket){
+    
+  console.log('Connected Remote Client: ' + socket.remoteAddress +':'+ socket.remotePort);
+  remoteClients.push(socket); //add client
+  
+  
+  console.log('tcp server running on port ', TCP_PORT);
+  console.log('web server running on port ', HTTP_PORT);
+  
+  socket.on('close', function() {
+        for(var i = 0; i < remoteClients.length; i++) {
+            if(remoteClients[i] == socket) { //remove client
+                remoteClients.splice(i,1);
+                break;
+            }
+        }
+    console.log('Disconnected remote client: ' + socket.remoteAddress +':'+ socket.remotePort);
+    });
+    // Add a 'data' event handler to this instance of socket
+    socket.on('data', function(data) {
+        console.log('data?');
+        for ( var i = 0; i < data.length; i++){
+            handleByte(data[i]);
+        }
+        function handleByte(buf){}
+    });
+}).listen(REMOTE_PORT);
+console.log('Server listening for remote connections on ' + REMOTE_PORT);
 
-app.set('port', FORWARDED_PORT); // Set the app's port
 
-// Initialize the HTTP server
-server.listen(app.get('port'), function () {
-  console.log("Express + Socket.io server listening on port " + app.get('port') + '...');
-});
 
-// Create and the Socket.io server and initialize it
-var sio = io.listen(server);
-
-sio.sockets.on('connection', function (client) {
-  console.log("hello", client);
-});
