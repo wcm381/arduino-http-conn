@@ -34,21 +34,6 @@ server.listen(HTTP_PORT);
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  server.listen(HTTP_PORT);
 
  /* 
   switch (path){
