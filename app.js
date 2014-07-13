@@ -50,7 +50,7 @@ send404 = function(res){
   res.writeHead(404);
   res.write('404');
   res.end();
-};*/
+};
 
 
 
@@ -83,5 +83,5 @@ net.createServer(function(socket){
 }).listen(REMOTE_PORT);
 console.log('Server listening for remote connections on ' + REMOTE_PORT);
 
-
+*/
 
