@@ -1,6 +1,6 @@
 
-var REMOTE_PORT = 8080;
-var HTTP_PORT = 6000;
+
+var HTTP_PORT = 8080;
 
 var http = require('http'),
     net = require('net'),
@@ -12,6 +12,45 @@ var remoteClients = [];
 
 server = http.createServer( function(req,res){
   var path = url.parse(req.url).pathname;
+  if (req.method == 'POST') {
+      console.log("POST");
+      console.log(req.headers);
+      
+      var body = "";
+      req.on('data', function(data) {
+            console.log("Data length: " + data.length);
+            body += data;
+            console.log("Partial body: " + data);
+      });
+      req.on('end', function () {
+          console.log("Body: " + body);
+          var obj = JSON.parse(body);
+          console.log(obj.data);
+      });
+  }
+});
+server.listen(HTTP_PORT);
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  server.listen(HTTP_PORT);
+
+ /* 
   switch (path){
     case '/':
       res.writeHead(200, {'Content-Type': 'text/html'});
@@ -26,9 +65,8 @@ send404 = function(res){
   res.writeHead(404);
   res.write('404');
   res.end();
-};
+};*/
 
-server.listen(HTTP_PORT);
 
 
 net.createServer(function(socket){
