@@ -60,25 +60,18 @@ server = http.createServer( function(req,res){
 });
   
   
-});
 server.listen(HTTP_PORT);
   
-
-
-var io = io.listent(server);
-
 
 var io = io.listen(server);
 
 io.sockets.on('connection', function(client){
         console.log('Connected!');
-        var theTime;
+        var theTime = getDateTime();
         setInterval(function(){
             theTime = getDateTime();
-            client.emit('date', {'date': new Date()});
+            client.emit('date', {'date': theTime});
             client.emit('temp', {'temp': dataVal});
-            //client.emit('date', {'date': new Date()});
-            //client.emit('data', {'data': dataVal});
         }, 1000);
 });
 
