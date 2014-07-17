@@ -1,1 +1,25 @@
-// Web-page file
+<html>
+  <head>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>  </head>
+  <title>Hi</title>
+  <body>
+    <script>
+      var socket = io.connect();
+
+      socket.on('date', function(data){
+          $('#date').text(data.date);
+
+      });
+
+      socket.on('temp', function(data){
+         $('#temp').text(data.temp);
+      });
+    </script>
+    <h3>Current Time: </h3>
+    <div id="date"></div>
+    <h3>Temperature (C): </h3>
+    <div id="temp"></div>
+  </body>
+</html>
+
