@@ -29,7 +29,7 @@ server = http.createServer( function(req,res){
         req.on('end', function () {
                 console.log("Body: " + body);
                 var obj = JSON.parse(body);
-                console.log(obj.data);
+                dataVal = obj.data;
         });
       } else {
         console.log(req.method);
